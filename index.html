@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Permohonan pernikahan yang interaktif dan lucu"
+        />
+        <title>Tembak-B | Permohonan Pernikahan</title>
+        <style>
+            /* Variabel CSS untuk konsistensi */
+            :root {
+                --primary-gradient: linear-gradient(135deg, #ffafbd, #ffc3a0);
+                --text-gradient: linear-gradient(90deg, #ff6a00, #ee0979);
+                --mau-btn-gradient: linear-gradient(90deg, #ffecd2, #fcb69f);
+                --tolak-btn-bg: #ff4757;
+                --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+                --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+                --transition: all 0.3s ease;
+            }
+
+            /* Reset dan base styles */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: "Segoe UI", Roboto, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                background: var(--primary-gradient);
+                overflow: hidden;
+                padding: 20px;
+            }
+
+            /* Card container */
+            .card {
+                background: white;
+                padding: 25px;
+                border-radius: 22px;
+                box-shadow: var(--card-shadow);
+                text-align: center;
+                max-width: 520px;
+                width: 100%;
+                position: relative;
+                animation: fadeIn 1s ease-out;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* Typography */
+            h1 {
+                font-size: 32px;
+                margin: 10px 0;
+                background: var(--text-gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: glow 2s ease-in-out infinite alternate;
+            }
+
+            @keyframes glow {
+                from {
+                    text-shadow: 0 0 6px #ff6a00;
+                }
+                to {
+                    text-shadow:
+                        0 0 22px #ee0979,
+                        0 0 35px #ff6a00;
+                }
+            }
+
+            p {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #444;
+                margin-bottom: 14px;
+            }
+
+            /* Image styling */
+            img.target {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                object-fit: cover;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+                margin-bottom: 18px;
+                border: 4px solid #fff;
+            }
+
+            /* Stage area */
+            .stage {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                background: #fdfdff;
+                border: 2px dashed #ddd;
+                border-radius: 18px;
+                overflow: hidden;
+                margin-top: 10px;
+            }
+
+            /* Buttons */
+            .btn {
+                position: absolute;
+                padding: 12px 24px;
+                font-size: 16px;
+                font-weight: 600;
+                border: none;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: var(--transition);
+                user-select: none;
+            }
+
+            #mauBtn {
+                background: var(--mau-btn-gradient);
+                color: #333;
+                box-shadow: var(--btn-shadow);
+            }
+
+            #tolakBtn {
+                background: var(--tolak-btn-bg);
+                color: #fff;
+                box-shadow: var(--btn-shadow);
+                right: 20px;
+                bottom: 20px;
+            }
+
+            /* Modal styles */
+            .modal {
+                position: fixed;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, 0.6);
+                visibility: hidden;
+                opacity: 0;
+                transition: var(--transition);
+                flex-direction: column;
+                z-index: 10;
+                padding: 20px;
+            }
+
+            .modal.open {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            /* Confirmation modal */
+            .confirm-box {
+                background: white;
+                border-radius: 16px;
+                padding: 22px;
+                text-align: center;
+                max-width: 340px;
+                width: 100%;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+                animation: pop 0.35s ease;
+            }
+
+            @keyframes pop {
+                from {
+                    transform: scale(0.7);
+                    opacity: 0;
+                }
+                to {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .confirm-box p {
+                font-size: 17px;
+                margin-bottom: 18px;
+                color: #333;
+            }
+
+            .confirm-btns {
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+            }
+
+            .confirm-btns button {
+                padding: 9px 20px;
+                border: none;
+                border-radius: 10px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: var(--transition);
+                min-width: 80px;
+            }
+
+            .yes-btn {
+                background: var(--tolak-btn-bg);
+                color: white;
+            }
+
+            .yes-btn:hover {
+                background: #e04050;
+            }
+
+            .no-btn {
+                background: #eee;
+                color: #333;
+            }
+
+            .no-btn:hover {
+                background: #ddd;
+            }
+
+            /* Video modal */
+            .modal-box {
+                background: pink;
+                border-radius: 14px;
+                padding: 18px;
+                max-width: 90vw;
+                max-height: 80vh;
+                text-align: center;
+                animation: pop 0.4s ease;
+                position: relative;
+            }
+
+            .modal img {
+                max-width: 220px;
+                border-radius: 14px;
+                margin-bottom: 12px;
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            }
+
+            .modal p {
+                color: black;
+                font-size: 15px;
+                margin: 5px 0;
+            }
+
+            video {
+                width: 560px;
+                max-width: 85vw;
+                height: 315px;
+                max-height: 60vh;
+                border-radius: 12px;
+                margin-top: 10px;
+                display: none;
+                background: #000;
+            }
+
+            .closeBtn {
+                position: absolute;
+                top: 18px;
+                right: 22px;
+                font-size: 34px;
+                color: white;
+                background: none;
+                border: 0;
+                cursor: pointer;
+                z-index: 11;
+                line-height: 1;
+            }
+
+            /* Responsiveness */
+            @media (max-width: 600px) {
+                .card {
+                    padding: 20px;
+                }
+
+                h1 {
+                    font-size: 26px;
+                }
+
+                .stage {
+                    height: 250px;
+                }
+
+                .btn {
+                    padding: 10px 20px;
+                    font-size: 14px;
+                }
+
+                .confirm-box {
+                    padding: 18px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="card">
+            <img src="image.jpg" alt="Foto pasangan" class="target" />
+            <h1>💍😳 Will You Marry Me?</h1>
+            <p>
+                Aku udah mikirin ini lama banget... Setiap hari bersamamu bikin
+                aku sadar kalau kamu adalah orang yang selalu aku tunggu-tunggu.
+            </p>
+            <p>
+                Kalau memang hatimu belum sama, klik <b>Tolak</b> dan jujurlah
+                padaku... Tapi kalau hatimu sama kayak aku, ayo coba deh klik
+                tombol <b>Mau 💖</b> (kalau bisa 😆).
+            </p>
+
+            <div class="stage" id="stage">
+                <button id="mauBtn" class="btn" aria-label="Tombol Mau">
+                    Mau 💖
+                </button>
+                <button id="tolakBtn" class="btn" aria-label="Tombol Tolak">
+                    Tolak ❌
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal konfirmasi -->
+        <div
+            class="modal"
+            id="confirmModal"
+            role="dialog"
+            aria-labelledby="confirmModalTitle"
+            aria-hidden="true"
+        >
+            <div class="confirm-box">
+                <p id="confirmModalTitle">😢 Yakin kamu mau nolak dia?</p>
+                <div class="confirm-btns">
+                    <button class="yes-btn" id="confirmYes">Iya</button>
+                    <button class="no-btn" id="confirmNo">Batal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal video -->
+        <div
+            class="modal"
+            id="videoModal"
+            role="dialog"
+            aria-labelledby="videoModalTitle"
+            aria-hidden="true"
+        >
+            <button class="closeBtn" id="closeModal" aria-label="Tutup modal">
+                ×
+            </button>
+            <div class="modal-box">
+                <img src="image.jpg" alt="Foto sedih" id="targetPhoto" />
+                <p id="videoModalTitle">😔 Dia sedih karena kamu nolak...</p>
+                <video id="memeVideo" controls>
+                    <source src="meme.mp4" type="video/mp4" />
+                    Browser Anda tidak mendukung pemutaran video.
+                </video>
+            </div>
+        </div>
+
+        <audio id="memeAudio">
+            <source src="meme.mp3" type="audio/mpeg" />
+            Browser Anda tidak mendukung pemutaran audio.
+        </audio>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // Element references
+                const stage = document.getElementById("stage");
+                const mauBtn = document.getElementById("mauBtn");
+                const tolakBtn = document.getElementById("tolakBtn");
+                const audio = document.getElementById("memeAudio");
+
+                const confirmModal = document.getElementById("confirmModal");
+                const confirmYes = document.getElementById("confirmYes");
+                const confirmNo = document.getElementById("confirmNo");
+
+                const videoModal = document.getElementById("videoModal");
+                const video = document.getElementById("memeVideo");
+                const closeModal = document.getElementById("closeModal");
+                const photo = document.getElementById("targetPhoto");
+
+                let avoidLevel = 1;
+
+                // Set initial button positions
+                function initButtonPositions() {
+                    const stageRect = stage.getBoundingClientRect();
+
+                    // Position mau button randomly
+                    randomPos(mauBtn);
+
+                    // Position tolak button at bottom right
+                    tolakBtn.style.left = `${
+                        stageRect.width - tolakBtn.offsetWidth - 20
+                    }px`;
+                    tolakBtn.style.top = `${
+                        stageRect.height - tolakBtn.offsetHeight - 20
+                    }px`;
+                }
+
+                // Generate random position within stage
+                function randomPos(btn) {
+                    const stageRect = stage.getBoundingClientRect();
+                    const btnWidth = btn.offsetWidth;
+                    const btnHeight = btn.offsetHeight;
+
+                    const maxX = stageRect.width - btnWidth - 10;
+                    const maxY = stageRect.height - btnHeight - 10;
+
+                    const x = Math.random() * maxX + 5;
+                    const y = Math.random() * maxY + 5;
+
+                    btn.style.left = `${x}px`;
+                    btn.style.top = `${y}px`;
+                }
+
+                // Move button when approached or clicked
+                function escape() {
+                    avoidLevel++;
+                    randomPos(mauBtn);
+
+                    // Add some visual feedback
+                    mauBtn.style.transform = `scale(${
+                        1 + Math.random() * 0.25
+                    }) rotate(${Math.random() * 20 - 10}deg)`;
+
+                    // Play sound effect
+                    try {
+                        audio.currentTime = 0;
+                        audio
+                            .play()
+                            .catch(e => console.log("Audio play failed:", e));
+                    } catch (error) {
+                        console.log("Audio error:", error);
+                    }
+                }
+
+                // Initialize
+                initButtonPositions();
+
+                // Event listeners
+                stage.addEventListener("mousemove", e => {
+                    const btnRect = mauBtn.getBoundingClientRect();
+                    const btnCenterX = btnRect.left + btnRect.width / 2;
+                    const btnCenterY = btnRect.top + btnRect.height / 2;
+
+                    const distance = Math.hypot(
+                        e.clientX - btnCenterX,
+                        e.clientY - btnCenterY
+                    );
+                    const escapeThreshold = 80 + avoidLevel * 10;
+
+                    if (distance < escapeThreshold) {
+                        escape();
+                    }
+                });
+
+                mauBtn.addEventListener("pointerdown", e => {
+                    e.preventDefault();
+                    escape();
+                });
+
+                tolakBtn.addEventListener("click", () => {
+                    confirmModal.classList.add("open");
+                    confirmModal.setAttribute("aria-hidden", "false");
+                });
+
+                confirmYes.addEventListener("click", () => {
+                    confirmModal.classList.remove("open");
+                    confirmModal.setAttribute("aria-hidden", "true");
+
+                    videoModal.classList.add("open");
+                    videoModal.setAttribute("aria-hidden", "false");
+
+                    photo.style.display = "block";
+                    video.style.display = "none";
+
+                    // Show video after delay
+                    setTimeout(() => {
+                        photo.style.display = "none";
+                        video.style.display = "block";
+
+                        try {
+                            video.currentTime = 0;
+                            video
+                                .play()
+                                .catch(e =>
+                                    console.log("Video play failed:", e)
+                                );
+                        } catch (error) {
+                            console.log("Video error:", error);
+                        }
+                    }, 2000);
+                });
+
+                confirmNo.addEventListener("click", () => {
+                    confirmModal.classList.remove("open");
+                    confirmModal.setAttribute("aria-hidden", "true");
+                });
+
+                closeModal.addEventListener("click", () => {
+                    video.pause();
+                    videoModal.classList.remove("open");
+                    videoModal.setAttribute("aria-hidden", "true");
+                });
+
+                videoModal.addEventListener("click", e => {
+                    if (e.target === videoModal) {
+                        video.pause();
+                        videoModal.classList.remove("open");
+                        videoModal.setAttribute("aria-hidden", "true");
+                    }
+                });
+
+                // Handle escape key to close modals
+                document.addEventListener("keydown", e => {
+                    if (e.key === "Escape") {
+                        if (videoModal.classList.contains("open")) {
+                            video.pause();
+                            videoModal.classList.remove("open");
+                            videoModal.setAttribute("aria-hidden", "true");
+                        }
+
+                        if (confirmModal.classList.contains("open")) {
+                            confirmModal.classList.remove("open");
+                            confirmModal.setAttribute("aria-hidden", "true");
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>

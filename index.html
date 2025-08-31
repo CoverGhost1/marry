@@ -7,13 +7,11 @@
   <title>Marry-me</title>
   <style>
     :root {
-      --primary-gradient: linear-gradient(135deg, #ffafbd, #ffc3a0);
-      --text-gradient: linear-gradient(90deg, #ff6a00, #ee0979);
-      --mau-btn-gradient: linear-gradient(90deg, #ffecd2, #fcb69f);
-      --tolak-btn-bg: #ff4757;
-      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-      --btn-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-      --transition: all 0.3s ease;
+      --gradient-bg: linear-gradient(135deg, #ff00cc, #3333ff, #00f0ff);
+      --text-gradient: linear-gradient(90deg, #ff9a9e, #fad0c4, #fad0c4);
+      --btn-mau: linear-gradient(90deg, #ffecd2, #fcb69f);
+      --btn-tolak: linear-gradient(90deg, #ff0844, #ffb199);
+      --glow: 0 0 15px rgba(255, 255, 255, 0.8);
     }
 
     * {
@@ -23,18 +21,18 @@
     }
 
     body {
-      font-family: "Segoe UI", Roboto, sans-serif;
+      font-family: "Poppins", sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background: var(--primary-gradient);
+      background: var(--gradient-bg);
       overflow: hidden;
       padding: 20px;
       position: relative;
     }
 
-    /* Canvas efek hujan */
+    /* Canvas efek hujan + hati */
     canvas#rainCanvas {
       position: fixed;
       inset: 0;
@@ -45,23 +43,24 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      padding: 25px;
-      border-radius: 22px;
-      box-shadow: var(--card-shadow);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
       text-align: center;
       max-width: 520px;
       width: 100%;
-      position: relative;
-      animation: fadeIn 1s ease-out;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: fadeIn 1.2s ease-out;
       z-index: 1;
+      position: relative;
     }
 
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
       }
       to {
         opacity: 1;
@@ -70,82 +69,88 @@
     }
 
     h1 {
-      font-size: 32px;
-      margin: 10px 0;
+      font-size: 36px;
+      margin: 12px 0;
       background: var(--text-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: glow 2s ease-in-out infinite alternate;
+      animation: glowText 2s ease-in-out infinite alternate;
     }
 
-    @keyframes glow {
+    @keyframes glowText {
       from {
-        text-shadow: 0 0 6px #ff6a00;
+        text-shadow: 0 0 10px #ff7eb9, 0 0 20px #ff65a3;
       }
       to {
-        text-shadow:
-          0 0 22px #ee0979,
-          0 0 35px #ff6a00;
+        text-shadow: 0 0 25px #7afcff, 0 0 35px #feff9c;
       }
     }
 
     p {
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.6;
-      color: #444;
+      color: #fff;
       margin-bottom: 14px;
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
     }
 
     img.target {
-      width: 150px;
-      height: 150px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
       margin-bottom: 18px;
-      border: 4px solid #fff;
+      border: 4px solid rgba(255,255,255,0.8);
       transition: transform 0.4s ease;
     }
     img.target:hover {
-      transform: scale(1.05) rotate(2deg);
+      transform: scale(1.08) rotate(3deg);
     }
 
     .stage {
       position: relative;
       width: 100%;
       height: 300px;
-      background: rgba(253, 253, 255, 0.85);
-      border: 2px dashed #ddd;
+      background: rgba(255,255,255,0.1);
+      border: 2px dashed rgba(255,255,255,0.3);
       border-radius: 18px;
       overflow: hidden;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .btn {
       position: absolute;
-      padding: 12px 24px;
+      padding: 12px 26px;
       font-size: 16px;
       font-weight: 600;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      transition: var(--transition);
+      transition: all 0.3s ease;
       user-select: none;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     #mauBtn {
-      background: var(--mau-btn-gradient);
+      background: var(--btn-mau);
       color: #333;
-      box-shadow: var(--btn-shadow);
+    }
+    #mauBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #fcb69f;
     }
 
     #tolakBtn {
-      background: var(--tolak-btn-bg);
-      color: #fff;
-      box-shadow: var(--btn-shadow);
+      background: var(--btn-tolak);
       right: 20px;
       bottom: 20px;
+    }
+    #tolakBtn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px #ff6a88;
     }
 
     /* Modal */
@@ -155,10 +160,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       visibility: hidden;
       opacity: 0;
-      transition: var(--transition);
+      transition: all 0.4s ease;
       flex-direction: column;
       z-index: 10;
       padding: 20px;
@@ -170,13 +175,13 @@
     }
 
     .confirm-box {
-      background: white;
-      border-radius: 16px;
-      padding: 22px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 18px;
+      padding: 25px;
       text-align: center;
-      max-width: 340px;
+      max-width: 350px;
       width: 100%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
       animation: pop 0.35s ease;
     }
 
@@ -192,7 +197,7 @@
     }
 
     .confirm-box p {
-      font-size: 17px;
+      font-size: 18px;
       margin-bottom: 18px;
       color: #333;
     }
@@ -200,41 +205,40 @@
     .confirm-btns {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .confirm-btns button {
-      padding: 9px 20px;
+      padding: 10px 22px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: var(--transition);
-      min-width: 80px;
+      transition: all 0.3s ease;
     }
 
     .yes-btn {
-      background: var(--tolak-btn-bg);
+      background: #ff4757;
       color: white;
     }
-
     .yes-btn:hover {
       background: #e04050;
+      box-shadow: 0 0 15px #ff6a88;
     }
 
     .no-btn {
       background: #eee;
       color: #333;
     }
-
     .no-btn:hover {
       background: #ddd;
+      box-shadow: 0 0 15px #fff;
     }
 
     .modal-box {
-      background: pink;
-      border-radius: 14px;
-      padding: 18px;
+      background: rgba(255,192,203,0.95);
+      border-radius: 16px;
+      padding: 20px;
       max-width: 90vw;
       max-height: 80vh;
       text-align: center;
@@ -246,13 +250,13 @@
       max-width: 220px;
       border-radius: 14px;
       margin-bottom: 12px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
     }
 
     .modal p {
       color: black;
-      font-size: 15px;
-      margin: 5px 0;
+      font-size: 16px;
+      margin: 6px 0;
     }
 
     video {
@@ -278,33 +282,10 @@
       z-index: 11;
       line-height: 1;
     }
-
-    @media (max-width: 600px) {
-      .card {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .stage {
-        height: 250px;
-      }
-
-      .btn {
-        padding: 10px 20px;
-        font-size: 14px;
-      }
-
-      .confirm-box {
-        padding: 18px;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Canvas efek hujan -->
+  <!-- Canvas efek hujan & hati -->
   <canvas id="rainCanvas"></canvas>
 
   <div class="card">
@@ -316,15 +297,15 @@
     </p>
 
     <div class="stage" id="stage">
-      <button id="mauBtn" class="btn" aria-label="Tombol Mau">Mau 💖</button>
-      <button id="tolakBtn" class="btn" aria-label="Tombol Tolak">Tolak ❌</button>
+      <button id="mauBtn" class="btn">Mau 💖</button>
+      <button id="tolakBtn" class="btn">Tolak ❌</button>
     </div>
   </div>
 
   <!-- Modal konfirmasi -->
   <div class="modal" id="confirmModal">
     <div class="confirm-box">
-      <p id="confirmModalTitle">😢 Yakin kamu mau nolak Aku?</p>
+      <p>😢 Yakin kamu mau nolak Aku?</p>
       <div class="confirm-btns">
         <button class="yes-btn" id="confirmYes">Iya</button>
         <button class="no-btn" id="confirmNo">Batal</button>
@@ -337,10 +318,9 @@
     <button class="closeBtn" id="closeModal">×</button>
     <div class="modal-box">
       <img src="image.jpg" alt="Foto sedih" id="targetPhoto" />
-      <p id="videoModalTitle">😔 Aku sedih Banget karena kamu nolak...</p>
+      <p>😔 Aku sedih banget karena kamu nolak...</p>
       <video id="memeVideo" controls>
         <source src="meme.mp4" type="video/mp4" />
-        Browser Anda tidak mendukung pemutaran video.
       </video>
     </div>
   </div>
@@ -348,13 +328,11 @@
   <!-- Musik latar -->
   <audio id="bgMusic" loop>
     <source src="lagu-romantis.mp3" type="audio/mpeg" />
-    Browser Anda tidak mendukung pemutar audio.
   </audio>
 
   <!-- Sound efek tombol -->
   <audio id="memeAudio">
     <source src="meme.mp3" type="audio/mpeg" />
-    Browser Anda tidak mendukung pemutaran audio.
   </audio>
 
   <script>
@@ -376,15 +354,15 @@
 
       let avoidLevel = 1;
 
-      // Background music
+      // Musik latar
       function playBackgroundMusic() {
         bgMusic.volume = 0.5;
-        bgMusic.play().catch(e => console.log("Autoplay diblokir:", e));
+        bgMusic.play().catch(()=>{});
         document.removeEventListener("click", playBackgroundMusic);
       }
       document.addEventListener("click", playBackgroundMusic);
 
-      // Tombol posisi
+      // Posisi tombol
       function initButtonPositions() {
         const stageRect = stage.getBoundingClientRect();
         randomPos(mauBtn);
@@ -394,15 +372,10 @@
 
       function randomPos(btn) {
         const stageRect = stage.getBoundingClientRect();
-        const btnWidth = btn.offsetWidth;
-        const btnHeight = btn.offsetHeight;
-
-        const maxX = stageRect.width - btnWidth - 10;
-        const maxY = stageRect.height - btnHeight - 10;
-
+        const maxX = stageRect.width - btn.offsetWidth - 10;
+        const maxY = stageRect.height - btn.offsetHeight - 10;
         const x = Math.random() * maxX + 5;
         const y = Math.random() * maxY + 5;
-
         btn.style.left = `${x}px`;
         btn.style.top = `${y}px`;
       }
@@ -411,12 +384,8 @@
         avoidLevel++;
         randomPos(mauBtn);
         mauBtn.style.transform = `scale(${1 + Math.random() * 0.25}) rotate(${Math.random() * 20 - 10}deg)`;
-        try {
-          audio.currentTime = 0;
-          audio.play().catch(e => console.log("Audio play failed:", e));
-        } catch (error) {
-          console.log("Audio error:", error);
-        }
+        audio.currentTime = 0;
+        audio.play().catch(()=>{});
       }
 
       initButtonPositions();
@@ -425,13 +394,9 @@
         const btnRect = mauBtn.getBoundingClientRect();
         const btnCenterX = btnRect.left + btnRect.width / 2;
         const btnCenterY = btnRect.top + btnRect.height / 2;
-
         const distance = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
         const escapeThreshold = 80 + avoidLevel * 10;
-
-        if (distance < escapeThreshold) {
-          escape();
-        }
+        if (distance < escapeThreshold) escape();
       });
 
       mauBtn.addEventListener("pointerdown", e => {
@@ -439,61 +404,30 @@
         escape();
       });
 
-      tolakBtn.addEventListener("click", () => {
-        confirmModal.classList.add("open");
-      });
-
+      tolakBtn.addEventListener("click", () => confirmModal.classList.add("open"));
       confirmYes.addEventListener("click", () => {
         confirmModal.classList.remove("open");
         videoModal.classList.add("open");
-
         photo.style.display = "block";
         video.style.display = "none";
-
         setTimeout(() => {
           photo.style.display = "none";
           video.style.display = "block";
-          try {
-            video.currentTime = 0;
-            video.play().catch(e => console.log("Video play failed:", e));
-          } catch (error) {
-            console.log("Video error:", error);
-          }
+          video.currentTime = 0;
+          video.play().catch(()=>{});
         }, 2000);
       });
-
-      confirmNo.addEventListener("click", () => {
-        confirmModal.classList.remove("open");
-      });
-
+      confirmNo.addEventListener("click", () => confirmModal.classList.remove("open"));
       closeModal.addEventListener("click", () => {
         video.pause();
         videoModal.classList.remove("open");
       });
 
-      videoModal.addEventListener("click", e => {
-        if (e.target === videoModal) {
-          video.pause();
-          videoModal.classList.remove("open");
-        }
-      });
-
-      document.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-          if (videoModal.classList.contains("open")) {
-            video.pause();
-            videoModal.classList.remove("open");
-          }
-          if (confirmModal.classList.contains("open")) {
-            confirmModal.classList.remove("open");
-          }
-        }
-      });
-
-      /* ================== Efek Hujan ================== */
+      /* ============ Efek Hujan + Petir + Hati ============ */
       const canvas = document.getElementById("rainCanvas");
       const ctx = canvas.getContext("2d");
-      let drops = [];
+      let drops = [], hearts = [];
+      let flashAlpha = 0;
 
       function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -503,9 +437,7 @@
       resizeCanvas();
 
       class Drop {
-        constructor() {
-          this.reset();
-        }
+        constructor() { this.reset(); }
         reset() {
           this.x = Math.random() * canvas.width;
           this.y = Math.random() * -canvas.height;
@@ -513,9 +445,9 @@
           this.speed = 4 + Math.random() * 4;
         }
         draw() {
-          ctx.beginPath();
           ctx.strokeStyle = "rgba(255,255,255,0.6)";
           ctx.lineWidth = 2;
+          ctx.beginPath();
           ctx.moveTo(this.x, this.y);
           ctx.lineTo(this.x, this.y + this.length);
           ctx.stroke();
@@ -527,16 +459,48 @@
         }
       }
 
-      for (let i = 0; i < 120; i++) {
-        drops.push(new Drop());
+      class Heart {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * -canvas.height;
+          this.size = 12 + Math.random() * 8;
+          this.speed = 1 + Math.random() * 2;
+          this.alpha = 0.8;
+        }
+        draw() {
+          ctx.fillStyle = `rgba(255,100,150,${this.alpha})`;
+          ctx.beginPath();
+          const s = this.size / 2;
+          ctx.moveTo(this.x, this.y + s);
+          ctx.bezierCurveTo(this.x - s, this.y - s, this.x - s*1.5, this.y + s/1.5, this.x, this.y + this.size);
+          ctx.bezierCurveTo(this.x + s*1.5, this.y + s/1.5, this.x + s, this.y - s, this.x, this.y + s);
+          ctx.fill();
+        }
+        update() {
+          this.y += this.speed;
+          if (this.y > canvas.height) this.reset();
+          this.draw();
+        }
       }
 
-      function animateRain() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < 120; i++) drops.push(new Drop());
+      for (let i = 0; i < 20; i++) hearts.push(new Heart());
+
+      function animate() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
         drops.forEach(d => d.update());
-        requestAnimationFrame(animateRain);
+        hearts.forEach(h => h.update());
+
+        if (Math.random() < 0.002) flashAlpha = 1; 
+        if (flashAlpha > 0) {
+          ctx.fillStyle = `rgba(255,255,255,${flashAlpha})`;
+          ctx.fillRect(0,0,canvas.width,canvas.height);
+          flashAlpha -= 0.05;
+        }
+        requestAnimationFrame(animate);
       }
-      animateRain();
+      animate();
     });
   </script>
 </body>

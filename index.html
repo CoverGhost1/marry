@@ -9,7 +9,6 @@
         />
         <title>Marry-me</title>
         <style>
-            /* Variabel CSS untuk konsistensi */
             :root {
                 --primary-gradient: linear-gradient(135deg, #ffafbd, #ffc3a0);
                 --text-gradient: linear-gradient(90deg, #ff6a00, #ee0979);
@@ -20,7 +19,6 @@
                 --transition: all 0.3s ease;
             }
 
-            /* Reset dan base styles */
             * {
                 box-sizing: border-box;
                 margin: 0;
@@ -38,7 +36,6 @@
                 padding: 20px;
             }
 
-            /* Card container */
             .card {
                 background: white;
                 padding: 25px;
@@ -62,7 +59,6 @@
                 }
             }
 
-            /* Typography */
             h1 {
                 font-size: 32px;
                 margin: 10px 0;
@@ -91,7 +87,6 @@
                 margin-bottom: 14px;
             }
 
-            /* Image styling */
             img.target {
                 width: 150px;
                 height: 150px;
@@ -102,7 +97,6 @@
                 border: 4px solid #fff;
             }
 
-            /* Stage area */
             .stage {
                 position: relative;
                 width: 100%;
@@ -114,7 +108,6 @@
                 margin-top: 10px;
             }
 
-            /* Buttons */
             .btn {
                 position: absolute;
                 padding: 12px 24px;
@@ -141,7 +134,6 @@
                 bottom: 20px;
             }
 
-            /* Modal styles */
             .modal {
                 position: fixed;
                 inset: 0;
@@ -162,7 +154,6 @@
                 opacity: 1;
             }
 
-            /* Confirmation modal */
             .confirm-box {
                 background: white;
                 border-radius: 16px;
@@ -225,7 +216,6 @@
                 background: #ddd;
             }
 
-            /* Video modal */
             .modal-box {
                 background: pink;
                 border-radius: 14px;
@@ -274,7 +264,6 @@
                 line-height: 1;
             }
 
-            /* Responsiveness */
             @media (max-width: 600px) {
                 .card {
                     padding: 20px;
@@ -319,13 +308,7 @@
         </div>
 
         <!-- Modal konfirmasi -->
-        <div
-            class="modal"
-            id="confirmModal"
-            role="dialog"
-            aria-labelledby="confirmModalTitle"
-            aria-hidden="true"
-        >
+        <div class="modal" id="confirmModal" role="dialog" aria-labelledby="confirmModalTitle" aria-hidden="true">
             <div class="confirm-box">
                 <p id="confirmModalTitle">😢 Yakin kamu mau nolak Aku?</p>
                 <div class="confirm-btns">
@@ -334,21 +317,10 @@
                 </div>
             </div>
         </div>
-        <audio id="bgMusic" loop>
-            <source src="lagu-romantis.mp3" type="audio/mpeg" />
-            Browser Anda tidak mendukung pemutar audio.
-        </audio>
+
         <!-- Modal video -->
-        <div
-            class="modal"
-            id="videoModal"
-            role="dialog"
-            aria-labelledby="videoModalTitle"
-            aria-hidden="true"
-        >
-            <button class="closeBtn" id="closeModal" aria-label="Tutup modal">
-                ×
-            </button>
+        <div class="modal" id="videoModal" role="dialog" aria-labelledby="videoModalTitle" aria-hidden="true">
+            <button class="closeBtn" id="closeModal" aria-label="Tutup modal">×</button>
             <div class="modal-box">
                 <img src="image.jpg" alt="Foto sedih" id="targetPhoto" />
                 <p id="videoModalTitle">😔 Aku sedih Banget karena kamu nolak...</p>
@@ -359,6 +331,13 @@
             </div>
         </div>
 
+        <!-- Musik latar -->
+        <audio id="bgMusic" loop>
+            <source src="lagu-romantis.mp3" type="audio/mpeg" />
+            Browser Anda tidak mendukung pemutar audio.
+        </audio>
+
+        <!-- Sound efek tombol -->
         <audio id="memeAudio">
             <source src="meme.mp3" type="audio/mpeg" />
             Browser Anda tidak mendukung pemutaran audio.
@@ -366,21 +345,7 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", () => {
-    const bgMusic = document.getElementById("bgMusic");
-
-    // Supaya musik mulai setelah user klik pertama kali
-    function playBackgroundMusic() {
-        bgMusic.volume = 0.5; // atur volume 0 - 1
-        bgMusic.play().catch(e => console.log("Autoplay diblokir:", e));
-        document.removeEventListener("click", playBackgroundMusic);
-    }
-
-    document.addEventListener("click", playBackgroundMusic);
-
-    // ====== kode kamu yang lain tetap di bawah ======
-                
-            document.addEventListener("DOMContentLoaded", () => {
-                // Element references
+                const bgMusic = document.getElementById("bgMusic");
                 const stage = document.getElementById("stage");
                 const mauBtn = document.getElementById("mauBtn");
                 const tolakBtn = document.getElementById("tolakBtn");
@@ -397,23 +362,22 @@
 
                 let avoidLevel = 1;
 
+                // Background music: play setelah klik pertama
+                function playBackgroundMusic() {
+                    bgMusic.volume = 0.5;
+                    bgMusic.play().catch(e => console.log("Autoplay diblokir:", e));
+                    document.removeEventListener("click", playBackgroundMusic);
+                }
+                document.addEventListener("click", playBackgroundMusic);
+
                 // Set initial button positions
                 function initButtonPositions() {
                     const stageRect = stage.getBoundingClientRect();
-
-                    // Position mau button randomly
                     randomPos(mauBtn);
-
-                    // Position tolak button at bottom right
-                    tolakBtn.style.left = `${
-                        stageRect.width - tolakBtn.offsetWidth - 20
-                    }px`;
-                    tolakBtn.style.top = `${
-                        stageRect.height - tolakBtn.offsetHeight - 20
-                    }px`;
+                    tolakBtn.style.left = `${stageRect.width - tolakBtn.offsetWidth - 20}px`;
+                    tolakBtn.style.top = `${stageRect.height - tolakBtn.offsetHeight - 20}px`;
                 }
 
-                // Generate random position within stage
                 function randomPos(btn) {
                     const stageRect = stage.getBoundingClientRect();
                     const btnWidth = btn.offsetWidth;
@@ -429,40 +393,26 @@
                     btn.style.top = `${y}px`;
                 }
 
-                // Move button when approached or clicked
                 function escape() {
                     avoidLevel++;
                     randomPos(mauBtn);
-
-                    // Add some visual feedback
-                    mauBtn.style.transform = `scale(${
-                        1 + Math.random() * 0.25
-                    }) rotate(${Math.random() * 20 - 10}deg)`;
-
-                    // Play sound effect
+                    mauBtn.style.transform = `scale(${1 + Math.random() * 0.25}) rotate(${Math.random() * 20 - 10}deg)`;
                     try {
                         audio.currentTime = 0;
-                        audio
-                            .play()
-                            .catch(e => console.log("Audio play failed:", e));
+                        audio.play().catch(e => console.log("Audio play failed:", e));
                     } catch (error) {
                         console.log("Audio error:", error);
                     }
                 }
 
-                // Initialize
                 initButtonPositions();
 
-                // Event listeners
                 stage.addEventListener("mousemove", e => {
                     const btnRect = mauBtn.getBoundingClientRect();
                     const btnCenterX = btnRect.left + btnRect.width / 2;
                     const btnCenterY = btnRect.top + btnRect.height / 2;
 
-                    const distance = Math.hypot(
-                        e.clientX - btnCenterX,
-                        e.clientY - btnCenterY
-                    );
+                    const distance = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
                     const escapeThreshold = 80 + avoidLevel * 10;
 
                     if (distance < escapeThreshold) {
@@ -490,18 +440,12 @@
                     photo.style.display = "block";
                     video.style.display = "none";
 
-                    // Show video after delay
                     setTimeout(() => {
                         photo.style.display = "none";
                         video.style.display = "block";
-
                         try {
                             video.currentTime = 0;
-                            video
-                                .play()
-                                .catch(e =>
-                                    console.log("Video play failed:", e)
-                                );
+                            video.play().catch(e => console.log("Video play failed:", e));
                         } catch (error) {
                             console.log("Video error:", error);
                         }
@@ -527,7 +471,6 @@
                     }
                 });
 
-                // Handle escape key to close modals
                 document.addEventListener("keydown", e => {
                     if (e.key === "Escape") {
                         if (videoModal.classList.contains("open")) {
@@ -535,7 +478,6 @@
                             videoModal.classList.remove("open");
                             videoModal.setAttribute("aria-hidden", "true");
                         }
-
                         if (confirmModal.classList.contains("open")) {
                             confirmModal.classList.remove("open");
                             confirmModal.setAttribute("aria-hidden", "true");

@@ -34,6 +34,58 @@
                 background: var(--primary-gradient);
                 overflow: hidden;
                 padding: 20px;
+                position: relative;
+            }
+
+            /* Efek hujan hati */
+            .hearts-background {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: -1;
+                overflow: hidden;
+            }
+
+            .heart {
+                position: absolute;
+                top: -50px;
+                color: rgba(255, 0, 0, 0.5);
+                font-size: 20px;
+                animation: fall linear forwards;
+                user-select: none;
+                pointer-events: none;
+            }
+
+            @keyframes fall {
+                to {
+                    transform: translateY(105vh) rotate(90deg);
+                }
+            }
+
+            /* Efek konfeti */
+            .confetti {
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background-color: #f0f;
+                opacity: 0.7;
+                pointer-events: none;
+                z-index: 1000;
+                animation: confetti-fall 5s linear forwards;
+            }
+
+            @keyframes confetti-fall {
+                0% {
+                    transform: translateY(-10px) rotate(0deg);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
             }
 
             .card {
@@ -46,6 +98,21 @@
                 width: 100%;
                 position: relative;
                 animation: fadeIn 1s ease-out;
+                overflow: hidden;
+                z-index: 2;
+            }
+
+            .card::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+                transform: rotate(30deg);
+                pointer-events: none;
+                z-index: -1;
             }
 
             @keyframes fadeIn {
@@ -67,6 +134,8 @@
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
                 animation: glow 2s ease-in-out infinite alternate;
+                position: relative;
+                z-index: 1;
             }
 
             @keyframes glow {
@@ -85,6 +154,8 @@
                 line-height: 1.6;
                 color: #444;
                 margin-bottom: 14px;
+                position: relative;
+                z-index: 1;
             }
 
             img.target {
@@ -95,6 +166,14 @@
                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
                 margin-bottom: 18px;
                 border: 4px solid #fff;
+                position: relative;
+                z-index: 1;
+                transition: transform 0.5s ease, box-shadow 0.5s ease;
+            }
+
+            img.target:hover {
+                transform: scale(1.05);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             }
 
             .stage {
@@ -106,6 +185,9 @@
                 border-radius: 18px;
                 overflow: hidden;
                 margin-top: 10px;
+                background-image: 
+                    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.7) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.7) 0%, transparent 20%);
             }
 
             .btn {
@@ -118,12 +200,29 @@
                 cursor: pointer;
                 transition: var(--transition);
                 user-select: none;
+                z-index: 5;
             }
 
             #mauBtn {
                 background: var(--mau-btn-gradient);
                 color: #333;
                 box-shadow: var(--btn-shadow);
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+                }
+                50% {
+                    transform: scale(1.05);
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                }
+                100% {
+                    transform: scale(1);
+                    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+                }
             }
 
             #tolakBtn {
@@ -163,6 +262,18 @@
                 width: 100%;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
                 animation: pop 0.35s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .confirm-box::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: var(--text-gradient);
             }
 
             @keyframes pop {
@@ -205,6 +316,7 @@
 
             .yes-btn:hover {
                 background: #e04050;
+                transform: translateY(-2px);
             }
 
             .no-btn {
@@ -214,6 +326,7 @@
 
             .no-btn:hover {
                 background: #ddd;
+                transform: translateY(-2px);
             }
 
             .modal-box {
@@ -225,6 +338,17 @@
                 text-align: center;
                 animation: pop 0.4s ease;
                 position: relative;
+                overflow: hidden;
+            }
+
+            .modal-box::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: var(--text-gradient);
             }
 
             .modal img {
@@ -262,6 +386,61 @@
                 cursor: pointer;
                 z-index: 11;
                 line-height: 1;
+                transition: transform 0.3s ease;
+            }
+
+            .closeBtn:hover {
+                transform: rotate(90deg);
+            }
+
+            .floating-elements {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                z-index: -1;
+            }
+
+            .floating-element {
+                position: absolute;
+                font-size: 24px;
+                opacity: 0.2;
+                animation: float 6s infinite ease-in-out;
+            }
+
+            .floating-element:nth-child(1) {
+                top: 10%;
+                left: 5%;
+                animation-delay: 0s;
+            }
+
+            .floating-element:nth-child(2) {
+                top: 20%;
+                right: 10%;
+                animation-delay: 1s;
+            }
+
+            .floating-element:nth-child(3) {
+                bottom: 15%;
+                left: 15%;
+                animation-delay: 2s;
+            }
+
+            .floating-element:nth-child(4) {
+                bottom: 25%;
+                right: 5%;
+                animation-delay: 3s;
+            }
+
+            @keyframes float {
+                0%, 100% {
+                    transform: translateY(0) rotate(0deg);
+                }
+                50% {
+                    transform: translateY(-20px) rotate(10deg);
+                }
             }
 
             @media (max-width: 600px) {
@@ -285,10 +464,25 @@
                 .confirm-box {
                     padding: 18px;
                 }
+
+                .floating-element {
+                    font-size: 18px;
+                }
             }
         </style>
     </head>
     <body>
+        <!-- Efek hujan hati di latar belakang -->
+        <div class="hearts-background" id="heartsBackground"></div>
+        
+        <!-- Elemen mengambang -->
+        <div class="floating-elements">
+            <div class="floating-element">💖</div>
+            <div class="floating-element">💍</div>
+            <div class="floating-element">🎉</div>
+            <div class="floating-element">🎊</div>
+        </div>
+
         <div class="card">
             <img src="image.jpg" alt="Foto pasangan" class="target" />
             <h1>💍😳 Will You Marry Me?</h1>
@@ -350,6 +544,7 @@
                 const mauBtn = document.getElementById("mauBtn");
                 const tolakBtn = document.getElementById("tolakBtn");
                 const audio = document.getElementById("memeAudio");
+                const heartsBackground = document.getElementById("heartsBackground");
 
                 const confirmModal = document.getElementById("confirmModal");
                 const confirmYes = document.getElementById("confirmYes");
@@ -362,6 +557,77 @@
 
                 let avoidLevel = 1;
 
+                // Membuat efek hujan hati
+                function createHearts() {
+                    const heartCount = 50;
+                    
+                    for (let i = 0; i < heartCount; i++) {
+                        const heart = document.createElement('div');
+                        heart.classList.add('heart');
+                        heart.innerHTML = '💖';
+                        
+                        // Posisi acak
+                        heart.style.left = Math.random() * 100 + 'vw';
+                        
+                        // Ukuran acak
+                        const size = Math.random() * 15 + 10;
+                        heart.style.fontSize = size + 'px';
+                        
+                        // Kecepatan jatuh acak
+                        const duration = Math.random() * 5 + 5;
+                        heart.style.animationDuration = duration + 's';
+                        
+                        // Tunda animasi
+                        heart.style.animationDelay = Math.random() * 5 + 's';
+                        
+                        heartsBackground.appendChild(heart);
+                        
+                        // Hapus elemen setelah selesai animasi
+                        setTimeout(() => {
+                            heart.remove();
+                        }, duration * 1000);
+                    }
+                }
+
+                // Membuat efek konfeti
+                function createConfetti() {
+                    const confettiCount = 150;
+                    const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+                    
+                    for (let i = 0; i < confettiCount; i++) {
+                        const confetti = document.createElement('div');
+                        confetti.classList.add('confetti');
+                        
+                        // Warna acak
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        
+                        // Posisi acak di bagian atas
+                        confetti.style.left = Math.random() * 100 + 'vw';
+                        
+                        // Ukuran acak
+                        const size = Math.random() * 10 + 5;
+                        confetti.style.width = size + 'px';
+                        confetti.style.height = size + 'px';
+                        
+                        // Bentuk acak
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                        
+                        // Kecepatan jatuh acak
+                        const duration = Math.random() * 3 + 2;
+                        confetti.style.animationDuration = duration + 's';
+                        
+                        document.body.appendChild(confetti);
+                        
+                        // Hapus elemen setelah selesai animasi
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, duration * 1000);
+                    }
+                }
+
+                // Jalankan hujan hati secara berkala
+                setInterval(createHearts, 300);
+                
                 // Background music: play setelah klik pertama
                 function playBackgroundMusic() {
                     bgMusic.volume = 0.5;
@@ -404,6 +670,16 @@
                         console.log("Audio error:", error);
                     }
                 }
+
+                // Event listener untuk tombol "Mau"
+                mauBtn.addEventListener("click", () => {
+                    createConfetti(); // Tampilkan konfeti saat tombol "Mau" diklik
+                    
+                    // Tampilkan pesan khusus
+                    alert("💖 YAY! Aku tahu kamu pasti mau! Aku sangat mencintaimu! 💖");
+                    
+                    // Bisa juga tambahkan efek atau redirect ke halaman lain di sini
+                });
 
                 initButtonPositions();
 

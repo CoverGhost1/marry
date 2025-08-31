@@ -334,7 +334,10 @@
                 </div>
             </div>
         </div>
-
+        <audio id="bgMusic" loop>
+            <source src="lagu-romantis.mp3" type="audio/mpeg" />
+            Browser Anda tidak mendukung pemutar audio.
+        </audio>
         <!-- Modal video -->
         <div
             class="modal"
@@ -362,6 +365,20 @@
         </audio>
 
         <script>
+            document.addEventListener("DOMContentLoaded", () => {
+    const bgMusic = document.getElementById("bgMusic");
+
+    // Supaya musik mulai setelah user klik pertama kali
+    function playBackgroundMusic() {
+        bgMusic.volume = 0.5; // atur volume 0 - 1
+        bgMusic.play().catch(e => console.log("Autoplay diblokir:", e));
+        document.removeEventListener("click", playBackgroundMusic);
+    }
+
+    document.addEventListener("click", playBackgroundMusic);
+
+    // ====== kode kamu yang lain tetap di bawah ======
+                
             document.addEventListener("DOMContentLoaded", () => {
                 // Element references
                 const stage = document.getElementById("stage");
